@@ -39,7 +39,7 @@ find_taxoname <- function(filepath, filename, type, encoding = "unknown", output
   content <- read_file(filepath, filename, type, encoding)
   wordlist <- build_words_list(content, type)
   wordlist <- remove_na_value(wordlist)
-  wordlist <- c(wordlist, "9999", "stop", "stop", "stop")
+  wordlist <- c(wordlist, "9999", "stopp", "stopp", "stopp")
   index_list <- locate_genus(wordlist)
   df <- build_df(wordlist, index_list)
   if (output_name != "FALSE"){
@@ -126,6 +126,8 @@ locate_genus <- function(wordlist){
 
 
 build_df <- function(wordlist,index_list){
+  dic <- genus_dic
+  dic$genus <- tolower(dic$genus)
   place_name <- all_place_name
   place_name$x <- tolower(iconv(place_name$x,"WINDOWS-1252","UTF-8"))
 
@@ -133,10 +135,21 @@ build_df <- function(wordlist,index_list){
 
   for (i in 1:length(index_list)){
     new_entry <- wordlist[as.integer(index_list[i])]
-    j = 1
-    while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10){
+
+    if (wordlist[as.integer(index_list[i])+1] %in% dic$genus){
+    new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+1],sep =" ")
+    j = 2
+    while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10 & (!tolower(wordlist[as.integer(index_list[i])+j]) %in% dic$genus)){
       new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+j],sep =" ")
       j = j + 1
+    }}
+    else{
+      j = 1
+      while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10 & (!tolower(wordlist[as.integer(index_list[i])+j]) %in% dic$genus)){
+        new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+j],sep =" ")
+        j = j + 1
+      }
+
     }
 
     while (str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") |
@@ -144,7 +157,6 @@ build_df <- function(wordlist,index_list){
            (str_detect(wordlist[as.integer(index_list[i]) + j + 1],"[0-9]{4}")) |
            tolower(wordlist[as.integer(index_list[i])+j]) == "distribution" |
            wordlist[as.integer(index_list[i])+j] == "and" |
-           str_detect(wordlist[as.integer(index_list[i])+j+1],"[0-9]{4}")|
            tolower(wordlist[as.integer(index_list[i])+j+1]) %in% place_name$x |
            (str_detect(wordlist[as.integer(index_list[i]) + j + 2],"[0-9]{4}"))|
            tolower(wordlist[as.integer(index_list[i]) + j + 1]) == "distribution" |
@@ -152,12 +164,17 @@ build_df <- function(wordlist,index_list){
     {
       new_entry <- paste(new_entry,wordlist[as.integer(index_list[i]) + j],sep = " ")
       j = j + 1
+      print(i)
+      print(j)
     }
     df <- rbind(df,new_entry)
   }
   df <- df[-1,]
   df <- str_replace_all(df, "9999", "")
   selected_list <- ""
+
+  print("finished 1")
+
 
   for (i in 1:length(df)){
     if (str_detect(df[i],"[1-2]{1}[0-9]{3}") & !str_detect(df[i],"[0-9]{5}")){
@@ -196,11 +213,14 @@ build_df <- function(wordlist,index_list){
       str_entry <- str_split(df[i],"\\s")
       if (! tolower(str_entry[[1]][1]) %in% place_name$x){
         count = 0
+        print(str_entry[[1]])
+        if (length(str_entry[[1]]) > 2){
         for (k in 3:length(str_entry[[1]])){
           if (tolower(str_entry[[1]][k]) %in% place_name$x | str_entry[[1]][k] == "and"){
             count = count + 1
           }
-        }
+        }}
+
         if (count > 3){
           n <- length(str_entry[[1]])
           final_entry <- str_entry[[1]][1]
