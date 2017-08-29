@@ -6,7 +6,6 @@
 #' by the users.
 #'
 #' @import RCurl
-#' @import RJSONIO
 #' @import plyr
 #' @import stringr
 #'
