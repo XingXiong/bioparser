@@ -9,12 +9,7 @@ bioparser.Rproj
 # RStudio files
 .Rproj.user/
 
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
-
 .Rproj.user
 .git
 
-man
 data
