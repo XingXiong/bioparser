@@ -37,11 +37,9 @@ further processed into a tabular format in csv which contains more detailed info
 using function \code{parse_taxolist}.
 }
 \examples{
- \dontrun{
 df <- find_taxoname(filepath = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data",
                     filename = "taxo01.txt",
                     type = "txt",
                     output_name = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/taxo01_output")
-}
 
 }
