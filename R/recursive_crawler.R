@@ -1,10 +1,10 @@
 #' Crawl and extract full taxonomic names from iterative webpages according to given html
 #' nodes of the contents on each page
 #'
-#' \code{recursive_crawler} locates and extracts full taxonomic names including order,
+#' \code{recursive_crawler} crawls, locates and extracts full taxonomic names including order,
 #' suborder, family, subfamily, tribe, subtribe, genus, subgenus, species, subspecies, if
 #' given. Users need to clarify a full structure of contents for crawling by indicating the
-#' corresponding html nodes on different page. Html nodes which contain urls that lead to
+#' corresponding html nodes on different pages. Html nodes which contain urls that lead to
 #' the child pages should also be passed into the functions. Besides, users should also specify
 #' the prefixes or postfixes of child pages if they have one.
 #'
@@ -15,6 +15,7 @@
 #' @import hash
 #' @import tidyverse
 #' @import gtools
+#' @import xml2
 #'
 #' @param start_url Required. The starting webpage which needs to be processed and can lead to
 #' child webpages via hyperlinks.
@@ -113,10 +114,10 @@ recursive_crawler <- function(start_url, crawl_contents, link_urls, pre_postfix_
   #print(start_page_df)
   for (i in 2:length(crawl_contents)){
     join_data <- data.frame()
-    print(i)
+    print(paste("Currently crawling on page:", i))
     for(j in 1:nrow(df_list[[i-1]])){
       cur_url <- df_list[[i-1]][j,]$sub_page_url
-      print(cur_url)
+      print(paste("Current url:", cur_url))
       if(!is.na(cur_url)){
         cur_df <- get_sciname_structure(cur_url, crawl_contents[[i]], link_urls[[i]], pre_postfix_list[[i]])
         if (length(cur_df)>0){
@@ -175,6 +176,7 @@ recursive_crawler <- function(start_url, crawl_contents, link_urls, pre_postfix_
   return(final_df)
 }
 
+
 get_href_list_by_node <- function(start_url, html_node, pre_postfix_list){
   tryCatch({href_source <- start_url %>%
     read_html() %>%
@@ -223,10 +225,6 @@ clean_href_source <-function(href_source){
 
 
 get_sciname_structure <- function(start_url, crawl_format_by_page, link_urls, pre_postfix_list){
-  start_url = 'https://species.wikimedia.org/wiki/Delias'
-  crawl_format_by_page <- crawl_contents[[3]]
-  link_urls <- link_urls[[3]]
-  pre_postfix_list <- pre_postfix_list[[3]]
   cur_page_nodes_name <- names(crawl_format_by_page)
   exist_nodes <- c()
   exist_lists <- list()
@@ -449,6 +447,7 @@ get_sciname_structure <- function(start_url, crawl_format_by_page, link_urls, pr
               test_part <- str_split(result_df[k+1,1], "[^A-z0-9]|\\[|\\]")
               test_dup_result <- c()
 
+
               if (length(test_part) > 0){
                 for (i in 1:length(test_part[[1]])){
                   test_dup_result <- c(test_dup_result, str_detect(result_df[k,1], test_part[[1]][i]))
@@ -457,6 +456,7 @@ get_sciname_structure <- function(start_url, crawl_format_by_page, link_urls, pr
               if (sum(test_dup_result) == length(test_part[[1]])){
                 page_num_list <- c(page_num_list, k-m)
                 m = m + 1
+
               }
               k = k + 1
               #print(k)
@@ -505,6 +505,7 @@ get_sciname_structure <- function(start_url, crawl_format_by_page, link_urls, pr
               result_df['sub_page_url'] <- sub_page_url
             }
           }
+
         }
       }
     }
@@ -513,9 +514,30 @@ get_sciname_structure <- function(start_url, crawl_format_by_page, link_urls, pr
 }
 
 
-
 normalize_url <- function(url){
   url <- str_replace_all(url, "\\.{2,}","")
   url <- str_replace_all(url, "[^:]\\//","\\/")
   return(url)
+}
+
+
+crawl_all_page <- function(start_url, next_page_node, crawl_format, pre_postfix_list, next_page_prefix, times = -1,file_path = "None"){
+  df_container <- list()
+  if (times == -1){
+
+  }
+  else{
+    for (i in 1:times){
+      df_container[[i]] <- recursive_crawler(start_url, crawl_format, pre_postfix_list)
+      start_url <- get_href_list_by_node(start_url, next_page_node, next_page_prefix)
+      start_url <- normalize_url(start_url)
+    }
+  }
+  merge_data <- data.frame()
+  if (file_path != "None"){
+    for (i in 1:length(df_container)){
+      merge_data = rbind(merge_data, df_container[[i]])
+    }
+    write.csv(merge_data, file_path, row.names = F)}
+  return(df_container)
 }
