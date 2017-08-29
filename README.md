@@ -37,3 +37,8 @@ This function crawls, locates and extracts full taxonomic names including order,
 - `web_crawler(starturl, crawl_format, pre_postfix_list, colnames, search_range)`:
 
 This function is a supplementary function to `recursive_crawler`. It's more flexible when users need to extract additional contents apart from order, suborder, family, subfamily, tribe, subtribe, genus, subgenus, species, subspecies if specified. The function handles some unusual situations when certain html nodes of identical contents on different pages change unexpectly. For example, html nodes of parent and child webpages which refer to exactly the same contents may change from "p:nth-child(4)" to "p:nth-child(6)" among pages by varying the number in a certain range. In general, this function starts from the top layer page, follows available url links to lower level pages and can only crawl contents on the lowest layer pages, which is the main difference to `recursive_crawler`. Since some useless information may also be grabbed due the changing html node scenarios, further data cleaning by users is strongly recommended.
+
+## Dictionary Sources
+In the `find_taxoname' function, the following dictionaries are used to locate taxonomy names and distribution info:
+- [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c)
+- [Geographic Names for Geopolitical Areas from GNS (ISO/IEC 10646 Compliant as of 18 July 2002)](http://geonames.nga.mil/gns/html/namefiles.html) (Note: only part of countries with large species number are used in consideration of look-up efficiency. )
