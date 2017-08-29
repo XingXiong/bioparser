@@ -1,10 +1,10 @@
 Package: bioparser
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
+Title: Parser and Crawler for Biodiversity Checklists.
+Version: 0.0.1
+Author: Qingyue Xu<qingyuex@andrew.cmu.edu>
+Maintainer: Qingyue Xu<qingyuex@andrew.cmu.edu>
+Description: This is an R package that implements locating, extracting, parsing and crawling biodiversity related scientific names and gets an organized structured results.
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 6.0.1.9000
