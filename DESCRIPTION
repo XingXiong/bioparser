@@ -2,10 +2,9 @@ Package: bioparser
 Type: Package
 Title: Parser and Crawler for Biodiversity Checklists.
 Version: 0.0.1
-Authors@R: c(
-   person("Qingyue", "Xu", email = "qingyuex@andrew.cmu.edu"),
-   person("Xing", "Xiong", email = "xing.xiong@rutgers.edu"))
-Maintainer: person("Qingyue", "Xu", email = "qingyuex@andrew.cmu.edu")
+Author: 
+    Qingyue Xu<qingyuex@andrew.cmu.edu>
+    Xing Xiong<xing.xiong@rutgers.edu>
 Description: This is an R package that implements locating, extracting, parsing and crawling biodiversity related scientific names and gets an organized structured results.
 Depends: R(>= 3.0.0)
 Imports:
