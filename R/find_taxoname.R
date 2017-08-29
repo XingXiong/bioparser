@@ -1,15 +1,15 @@
 #' Locate and extract taxonomic names from given input files
 #'
-#' \code{find_taxoname} locates and extracts taxonomic names from txt, docx, or pdf
-#' files and reorganize the taxonomy names into standard order: genus, species, subspecies,
+#' \code{find_taxoname} locates and extracts taxonomic names from txt, docx, pdf or html
+#' files and reorganizes the taxonomy names into standard order: genus, species, subspecies,
 #' author&year, distribution. The function can output the result to a txt file and each row
 #' of the file is one entry of a taxonomic name. The result txt file of this function can be
 #' further processed into a tabular format in csv which contains more detailed information
 #' using function \code{parse_taxolist}.
 #'
 #' @import pdftools
-#' @import qdapTools
 #' @import stringr
+#' @importFrom qdapTools, read_docx
 #'
 #' @param filepath Required. The path of the file which the data is to be read from.
 #' If it does not contain an absolute path, the file name is relative to the current
@@ -44,7 +44,7 @@ find_taxoname <- function(filepath, filename, type, encoding = "unknown", output
   df <- build_df(wordlist, index_list)
   if (output_name != "FALSE"){
     output_name = paste(output_name, "txt", sep = ".")
-    write.table(df, output_name, row.names = F)
+    write.table(df, output_name, row.names = F,quote = FALSE,col.names = F)
   }
   return(df)
 }
@@ -137,12 +137,12 @@ build_df <- function(wordlist,index_list){
     new_entry <- wordlist[as.integer(index_list[i])]
 
     if (wordlist[as.integer(index_list[i])+1] %in% dic$genus){
-    new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+1],sep =" ")
-    j = 2
-    while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10 & (!tolower(wordlist[as.integer(index_list[i])+j]) %in% dic$genus)){
-      new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+j],sep =" ")
-      j = j + 1
-    }}
+      new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+1],sep =" ")
+      j = 2
+      while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10 & (!tolower(wordlist[as.integer(index_list[i])+j]) %in% dic$genus)){
+        new_entry <- paste(new_entry,wordlist[as.integer(index_list[i])+j],sep =" ")
+        j = j + 1
+      }}
     else{
       j = 1
       while ( !str_detect(wordlist[as.integer(index_list[i])+j],"[0-9]{4}") & j < 10 & (!tolower(wordlist[as.integer(index_list[i])+j]) %in% dic$genus)){
@@ -164,8 +164,8 @@ build_df <- function(wordlist,index_list){
     {
       new_entry <- paste(new_entry,wordlist[as.integer(index_list[i]) + j],sep = " ")
       j = j + 1
-      print(i)
-      print(j)
+      #print(i)
+      #print(j)
     }
     df <- rbind(df,new_entry)
   }
@@ -173,7 +173,7 @@ build_df <- function(wordlist,index_list){
   df <- str_replace_all(df, "9999", "")
   selected_list <- ""
 
-  print("finished 1")
+  #print("finished 1")
 
 
   for (i in 1:length(df)){
@@ -213,13 +213,13 @@ build_df <- function(wordlist,index_list){
       str_entry <- str_split(df[i],"\\s")
       if (! tolower(str_entry[[1]][1]) %in% place_name$x){
         count = 0
-        print(str_entry[[1]])
+        #print(str_entry[[1]])
         if (length(str_entry[[1]]) > 2){
-        for (k in 3:length(str_entry[[1]])){
-          if (tolower(str_entry[[1]][k]) %in% place_name$x | str_entry[[1]][k] == "and"){
-            count = count + 1
-          }
-        }}
+          for (k in 3:length(str_entry[[1]])){
+            if (tolower(str_entry[[1]][k]) %in% place_name$x | str_entry[[1]][k] == "and"){
+              count = count + 1
+            }
+          }}
 
         if (count > 3){
           n <- length(str_entry[[1]])
