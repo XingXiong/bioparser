@@ -7,7 +7,6 @@ Maintainer: Qingyue Xu<qingyuex@andrew.cmu.edu>
 Description: This is an R package that implements locating, extracting, parsing and crawling biodiversity related scientific names and gets an organized structured results.
 Imports:
     RCurl,
-    RJSONIO,
     XML,
     gtools,
     hash,
