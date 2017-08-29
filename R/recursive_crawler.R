@@ -79,7 +79,7 @@
 #'                         sec_page = c(prefix = "", postfix = ""),
 #'                         third_page = c(prefix = "", postfix = ""),
 #'                         fourth_page = c(prefix = "", postfix = ""))
-#' output_file = 'D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/recursive_crawler_result1.csv'
+#' output_file = './Examples/output_data/recursive_crawler_result1.csv'
 #' df_result = recursive_crawler(start_url, crawl_format, link_urls, pre_postfix_list, output_file)
 #'
 #' example#2:
@@ -101,7 +101,7 @@
 #'                          third_page = c(prefix = "https://species.wikimedia.org", postfix = ""),
 #'                          fourth_page = c(prefix = "https://species.wikimedia.org", postfix = ""),
 #'                          fifth_page = c(prefix = "https://species.wikimedia.org", postfix = ""))
-#' output_file <- 'D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/recursive_crawler_result2.csv'
+#' output_file <- './Examples/output_data/recursive_crawler_result2.csv'
 #' df_result <- recursive_crawler(start_url, crawl_contents, link_urls, pre_postfix_list, output_file)
 #'
 #' }

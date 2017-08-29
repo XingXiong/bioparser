@@ -83,11 +83,11 @@ pre_postfix_list = list(first_page = c(prefix = "", postfix = ""),
                         sec_page = c(prefix = "", postfix = ""),
                         third_page = c(prefix = "", postfix = ""),
                         fourth_page = c(prefix = "", postfix = ""))
-output_file = 'D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/recursive_crawler_result1.csv'
+output_file = './Examples/output_data/recursive_crawler_result1.csv'
 df_result = recursive_crawler(start_url, crawl_format, link_urls, pre_postfix_list, output_file)
 
 example#2:
-start_url <- "https://species.wikimedia.org/wiki/Pierini"
+start_url = "https://species.wikimedia.org/wiki/Pierini"
 crawl_contents <- list(first_page = list(family_node = '.mw-collapsed+ p a:nth-child(1)',
                                          subfamily_node = '#mw-content-text a:nth-child(3)',
                                          tribe_node = '.selflink'),
@@ -95,18 +95,18 @@ crawl_contents <- list(first_page = list(family_node = '.mw-collapsed+ p a:nth-c
                        third_page = list(genus_node = '.selflink'),
                        fourth_page = list(species_node = '.selflink'),
                        fifth_page = list(subspecies_node = 'h2+ p'))
-link_urls <- list(first_page = '.selflink~ a',
+link_urls = list(first_page = '.selflink~ a',
                   sec_page = 'i a',
                   third_page ='i~ i a' ,
                   fourth_page = 'i+ i a , i:nth-child(13) a',
                   fifth_page = '')
-pre_postfix_list <- list(first_page = c(prefix = "https://species.wikimedia.org", postfix = " "),
+pre_postfix_list = list(first_page = c(prefix = "https://species.wikimedia.org", postfix = " "),
                          sec_page = c(prefix = "https://species.wikimedia.org", postfix = ""),
                          third_page = c(prefix = "https://species.wikimedia.org", postfix = ""),
                          fourth_page = c(prefix = "https://species.wikimedia.org", postfix = ""),
                          fifth_page = c(prefix = "https://species.wikimedia.org", postfix = ""))
-output_file <- 'D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/recursive_crawler_result2.csv'
-df_result <- recursive_crawler(start_url, crawl_contents, link_urls, pre_postfix_list, output_file)
+output_file = './Examples/output_data/recursive_crawler_result2.csv'
+df_result = recursive_crawler(start_url, crawl_contents, link_urls, pre_postfix_list, output_file)
 
 
 }

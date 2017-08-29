@@ -28,10 +28,10 @@
 #' entry of taxonomic names.
 #'
 #' @examples  \dontrun{
-#' df <- find_taxoname(filepath = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data",
+#' df <- find_taxoname(filepath = "./Examples/input_data",
 #'                     filename = "taxo01.txt",
 #'                     type = "txt",
-#'                     output_name = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/taxo01_output")
+#'                     output_name = "./Examples/output_data/taxo01_output")
 #'}
 #'
 #' @export

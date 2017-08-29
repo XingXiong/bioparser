@@ -30,7 +30,8 @@ automatically based on the structure of input texts. If it is indicated explicit
 users, the function will parse the input texts based on the rules specified in the
 \code{config}. Some examples of config are provided in the "Examples" part. Note that:
 Author_year should be regarded as a whole part; The separator between author_year part
-and distribution part should be stated clearly.}
+and distribution part should be stated clearly; If '\\n' exsits, it can only appear
+right after the \code{genus} part.}
 }
 \value{
 A data frame containing the result of parsing taxonomic names in the input
@@ -49,8 +50,8 @@ by the users.
 }
 \examples{
 # example1:
-parse_taxolist(input_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data/test_example.txt",
-               output_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/test_example_output.csv",
+parse_taxolist(input_file = "./Examples/input_data/test_example.txt",
+               output_file = "./Examples/output_data/test_example_output.csv",
                location_detail = TRUE,
                language = "English",
                evaluation = TRUE,
@@ -63,8 +64,8 @@ Lychas hendersoni Pocock, 1897) Distribution: Kerala and Tamil Nadu.
 
 
 # example2:
-parse_taxolist(input_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data/test_example_config_1.txt",
-               output_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/test_example_output_config_1.csv",
+parse_taxolist(input_file = "./Examples/input_data/test_example_config_1.txt",
+               output_file = "./Examples/output_data/test_example_output_config_1.csv",
                location_detail = FALSE,
                language = "English",
                evaluation = TRUE,
@@ -75,8 +76,8 @@ Pachliopta pandiyana Moore, 1881 Distribution: Goa, Karnataka, Kerala
 
 
 # example3:
-parse_taxolist(input_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data/test_example_config_2.txt",
-               output_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/test_example_output_config_2.csv",
+parse_taxolist(input_file = "./Examples/input_data/test_example_config_2.txt",
+               output_file = "./Examples/output_data/test_example_output_config_2.csv",
                location_detail = FALSE,
                language = "English",
                evaluation = FALSE,
@@ -87,8 +88,8 @@ Pachliopta pandiyana Moore, 1881 : Goa, Karnataka, Kerala
 
 
 # example4:
-parse_taxolist(input_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/input_data/test_example_config_3.txt",
-               output_file = "D:/code/Parser/Parser_for_Biodiversity_Checklists/Examples/output_data/test_example_output_config_3.csv",
+parse_taxolist(input_file = "./Examples/input_data/test_example_config_3.txt",
+               output_file = "./Examples/output_data/test_example_output_config_3.csv",
                location_detail = TRUE,
                language ="English",
                evaluation = FALSE,
