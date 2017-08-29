@@ -519,25 +519,3 @@ normalize_url <- function(url){
   url <- str_replace_all(url, "[^:]\\//","\\/")
   return(url)
 }
-
-
-crawl_all_page <- function(start_url, next_page_node, crawl_format, pre_postfix_list, next_page_prefix, times = -1,file_path = "None"){
-  df_container <- list()
-  if (times == -1){
-
-  }
-  else{
-    for (i in 1:times){
-      df_container[[i]] <- recursive_crawler(start_url, crawl_format, pre_postfix_list)
-      start_url <- get_href_list_by_node(start_url, next_page_node, next_page_prefix)
-      start_url <- normalize_url(start_url)
-    }
-  }
-  merge_data <- data.frame()
-  if (file_path != "None"){
-    for (i in 1:length(df_container)){
-      merge_data = rbind(merge_data, df_container[[i]])
-    }
-    write.csv(merge_data, file_path, row.names = F)}
-  return(df_container)
-}
