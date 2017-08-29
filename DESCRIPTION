@@ -5,6 +5,18 @@ Version: 0.0.1
 Author: Qingyue Xu<qingyuex@andrew.cmu.edu>
 Maintainer: Qingyue Xu<qingyuex@andrew.cmu.edu>
 Description: This is an R package that implements locating, extracting, parsing and crawling biodiversity related scientific names and gets an organized structured results.
+Imports:
+    RCurl,
+    RJSONIO,
+    XML,
+    gtools,
+    hash,
+    pdftools,
+    plyr,
+    rvest,
+    stringr,
+    tidyverse,
+    xml2
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 6.0.1.9000
