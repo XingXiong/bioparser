@@ -4,8 +4,7 @@
 \alias{find_taxoname}
 \title{Locate and extract taxonomic names from given input files}
 \usage{
-find_taxoname(filepath, filename, type, encoding = "unknown",
-  output_name = "FALSE")
+find_taxoname(filepath, filename, type, encoding = "unknown", output_name = "FALSE")
 }
 \arguments{
 \item{filepath}{Required. The path of the file which the data is to be read from.
